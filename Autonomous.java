@@ -1,3 +1,4 @@
+//OBSOLETE
 /**
 *Autonomous OpMode for Commodore 64
 *PRA Robotics Rookie Team
