@@ -38,7 +38,6 @@ public class Autonomous extends LinearOpMode {
   double tickFactor = 33.95 / 140; //distance covered by each encorder tick
   double leftPow = 0; //left motor power
   double rightPow = 0; //right motor power
-  double targetPos = 160; //distance to go in centimeters
   public void runOpMode() {
     vuforia = new VuforiaRoverRuckus();
     left = hardwareMap.dcMotor.get("leftMotor");
