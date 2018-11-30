@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaRoverRuckus;
 //declare opMode and name
 @Autonomous(name = "Autonomous")
-public class AutonomousDelta extends LinearOpMode {
+public class Autonomous extends LinearOpMode {
   //vuforia instances declared
   VuforiaRoverRuckus vuforia = null;
   VuforiaBase.TrackingResults vuRed = null;
