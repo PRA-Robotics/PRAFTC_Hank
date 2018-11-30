@@ -111,8 +111,8 @@ public class Autonomous extends LinearOpMode {
           markVis = "No";
         }
         while (left.isBusy() || right.isBusy()) {
-            left.setPower((leftPow * corFactor) / 10);
-            right.setPower(rightPow / 10);
+          left.setPower((leftPow * corFactor) / 10);
+          right.setPower(rightPow / 10);
         }
         telemetry.addData("X Position", xPos + " cm");
         telemetry.addData("Y Position", yPos + " cm");
