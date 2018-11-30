@@ -1,158 +1,133 @@
-//OBSOLETE
 /**
-*Autonomous OpMode for Commodore 64
-*PRA Robotics Rookie Team
+*Autonomous Delta OpMode
+*Commodore 64 Team
+*PRA Rookie Robotics
 *Written by Noah Mulvaney
 **/
-//import packages
+//packages and imports
+package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.*;
-//set opMode and program name displayed on FTC app
-@Autonomous(name = "Autonomous NM", group = " ")
-//primary class constructor
-public class AutonomousNM extends LinearOpMode {
-  //hardware variables declaration
-  private DcMotor leftMotor;
-  private DcMotor rightMotor;
-  private Servo dropServo;
-  private Servo liftServo;
-  //declare and initalize variables
-  int count = 0;
-  int interval = 0;
-  double time = 0;
-  double leftPower = 0;
-  double rightPower = 0;
-  double correctionFactor = 0;
-  double speedBase = 0;
-  double leftSpeed = 0;
-  double rightSpeed = 0;
-  double dropPosition = 0;
-  double xPosition = 0;
-  double yPosition = 0;
-  double orientation = 0;
-  //functions
-  //for configuring static varaiables
-  void configure() {
-    correctionFactor = .85; //adjustment to rightMotor power to straighen course, determined expirementally
-    speedBase = 55 / 2; //speed in centimeters per second, determined expirementally
-    interval = 4; //time accuaracy for wait, count, and time system, a larger value results in less error from run time but reduces rate of commanded changes
-  }
-  //for setting intial motor power
-  void settings(double leftF, double rightF) {
-    leftPower = leftF; //inital left power
-    rightPower = rightF; //inital right power
-  }
-  //updates time and adds count
-  void timeUpdate() {
-    time = count / interval; //calculate time in seconds
-    count ++; //add loop count
-  }
-  //lower door to drop marker
-  void dropMarker() {
-    dropPosition = 1; //full open
-  }
-  //close door on marker drop
-  void closeDrop() {
-    dropPosition = 0; //closed
-  }
-  //reverse both motors
-  void reverse() {
-    if (leftPower > 0) { //if left power is foward
-      leftPower = - leftPower; //make backwards
-    }
-    if (rightPower > 0) { //if right power is foward
-      rightPower = - rightPower; //make backwards
-    }
-  }
-  //stop robot by cutting power
-  void stopMotor() {
-    leftPower = 0; //brake left motor
-    rightPower = 0; //brake right motor
-  }
-  //recalculates speed values
-  void speedUpdate() {
-    leftSpeed = leftPower * speedBase; //left speed
-    rightSpeed = rightPower * speedBase; //right speed
-  }
-  //variables to harware update
-  void hardwareUpdate() {
-    dropServo.setPosition(dropPosition); //marker drop servo position
-    leftMotor.setDirection(DcMotorSimple.Direction.REVERSE); //reverse left motor to make positive forward
-    leftMotor.setPower(leftPower / 10); //left motor adjusted for correct range
-    rightMotor.setPower((rightPower * correctionFactor) / 10); //right motor adjusted for straightness and correct range
-  }
-  //variables to telemetry data
-  void telemetryData() {
-    telemetry.addData("X Position", xPosition + " cm"); //forward backwards position on field
-    telemetry.addData("Y Position", yPosition + " cm"); //left right from start position
-    telemetry.addData("Orientation", orientation + "°"); //orientation where start is 0°
-    telemetry.addData("Time", time + " sec"); //time in seconds
-    telemetry.addData("Drop Servo Position", dropPosition); //position of servo on marker drop
-    telemetry.addData("Left Motor Power", leftPower); //left motor power
-    telemetry.addData("Right Motor Power", rightPower); //right motor power
-    telemetry.addData("Left Motor Speed", leftSpeed + " cm/sec"); //calculated left speed
-    telemetry.addData("Right Motor Speed", rightSpeed + " cm/sec"); //calcualated right speed
-  }
-  //chack variables for correct range
-  void variableCheck() {
-    //drop position between 0 and 1
-    if (dropPosition < 0) {
-      dropPosition = 0;
-    }
-    if (dropPosition > 1) {
-      dropPosition = 1;
-    }
-    //power between -10 and 10
-    if (leftPower < -10) {
-      leftPower = -10;
-    }
-    if (leftPower > 10) {
-      leftPower = 10;
-    }
-    if (rightPower < -10) {
-      rightPower = -10;
-    }
-    if (rightPower > 10) {
-      rightPower = 10;
-    }
-  }
-  //when program is selected
+import org.firstinspires.ftc.robotcore.external.JavaUtil;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaBase;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaRoverRuckus;
+//declare opMode and name
+@Autonomous(name = "Autonomous")
+public class AutonomousDelta extends LinearOpMode {
+  //vuforia instances declared
+  VuforiaRoverRuckus vuforia = null;
+  VuforiaBase.TrackingResults vuRed = null;
+  VuforiaBase.TrackingResults vuBlue = null;
+  VuforiaBase.TrackingResults vuFront = null;
+  VuforiaBase.TrackingResults vuBack = null;
+  //hardware instances declared
+  DcMotor left = null; //represents left drive motor
+  DcMotor right = null; //represents right drive Motor
+  DcMotor lift = null; //represents motor for the lift
+  Servo drop = null; //represents the servo for dropping the marker
+  Servo tilt = null; //represents the servo for tilting the lift arm
+  Servo grab = null; //represents the servo for grabiing the particules
+  //variables delcared and initialized
+  double xPos = 0; //x position on the field with positive being toward forward wall
+  double yPos = 0; //y position with positive being toward the blue wall
+  double rot = 0; //orientation of the robot with zero being facing the forward wall
+  String markVis = " "; //indicates which vuforia mark is visible
+  double corFactor = 0; //corrects drive motor power to straighten
+  double tickFactor = 33.95 / 140; //distance covered by each encorder tick
+  double leftPow = 0; //left motor power
+  double rightPow = 0; //right motor power
+  double targetPos = 160; //distance to go in centimeters
   public void runOpMode() {
-    //hardware map initalized
-    leftMotor = hardwareMap.dcMotor.get("leftMotor"); //motor configuration 0
-    rightMotor = hardwareMap.dcMotor.get("rightMotor"); //motor configuration 1
-    dropServo = hardwareMap.servo.get("dropServo"); //servo configuration 0
-    liftServo = hardwareMap.servo.get("liftServo"); //servo configuration 0
-    waitForStart(); //wait for start button to be pressed
-    if (opModeIsActive()) { //when running
-      //inital servo and motor positions
-      closeDrop();
-      stopMotor();
-      //configurations and settings
-      configure();
-      settings(2, 2);
-      while (opModeIsActive()) { //loop while running
-        //updated time
-        timeUpdate();
-        //test program
-        xPosition = leftSpeed * time; //calculate position for linear motion at constant speed
-        if (xPosition > 200) { //after two meters
-          dropMarker(); //drop marker
-          stopMotor(); //stop moving
-          sleep(2000); //wait two seconds
-          closeDrop(); //close drop door
+    vuforia = new VuforiaRoverRuckus();
+    left = hardwareMap.dcMotor.get("leftMotor");
+    right = hardwareMap.dcMotor.get("rightMotor");
+    drop = hardwareMap.servo.get("dropServo");
+    lift = hardwareMap.dcMotor.get("liftMotor");
+    tilt = hardwareMap.servo.get("tiltServo");
+    grab = hardwareMap.servo.get("grabServo");
+    vuforia.initialize(" ", VuforiaLocalizer.CameraDirection.BACK, false, true, VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES, 0, 0, 0, 0, 0, 0, true);
+    waitForStart();
+    if (opModeIsActive()) {
+      vuforia.activate();
+      left.setDirection(DcMotor.Direction.REVERSE);
+      left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      left.setTargetPosition(left.getCurrentPosition() + (int) (targetPos / tickFactor));
+      right.setTargetPosition(right.getCurrentPosition() + (int) (targetPos / tickFactor));
+      leftPow = 4;
+      rightPow = 4;
+      while (opModeIsActive()) {
+        vuRed = vuforia.track("RedPerimeter");
+        vuBlue = vuforia.track("BluePerimeter");
+        vuFront = vuforia.track("FrontPerimeter");
+        vuBack = vuforia.track("BackPerimeter");
+        if (vuRed.isVisible) {
+          xPos = 0;
+          yPos = 0;
+          for (int i = 0; i < 12; i++) {
+            xPos += vuRed.x / 10;
+            yPos += vuRed.y / 10;
+          }
+          xPos = xPos / 12;
+          yPos = yPos / 12;
+          rot = vuRed.xAngle;
+          markVis = "Red";
+        } else if (vuBlue.isVisible) {
+          xPos = 0;
+          yPos = 0;
+          for (int i = 0; i < 12; i++) {
+            xPos += vuBlue.x / 10;
+            yPos += vuBlue.y / 10;
+          }
+          xPos = xPos / 12;
+          yPos = yPos / 12;
+          rot = vuBlue.xAngle;
+          markVis = "Blue";
+        } else if (vuFront.isVisible) {
+          xPos = 0;
+          yPos = 0;
+          for (int i = 0; i < 12; i++) {
+            xPos += vuFront.x / 10;
+            yPos += vuFront.y / 10;
+          }
+          xPos = xPos / 12;
+          yPos = yPos / 12;
+          rot = vuFront.xAngle;
+          markVis = "Front";
+        } else if (vuBack.isVisible) {
+          xPos = 0;
+          yPos = 0;
+          for (int i = 0; i < 12; i++) {
+            xPos += vuBack.x / 10;
+            yPos += vuBack.y / 10;
+          }
+          xPos = xPos / 12;
+          yPos = yPos / 12;
+          rot = vuBack.xAngle;
+          markVis = "Back";
+        } else {
+          markVis = "No";
         }
-        //update variables
-        speedUpdate();
-        variableCheck();
-        //update hardware and telemetry
-        hardwareUpdate();
-        telemetryData();
+        while (left.isBusy() || right.isBusy()) {
+            left.setPower((leftPow * corFactor) / 10);
+            right.setPower(rightPow / 10);
+        }
+        telemetry.addData("X Position", xPos + " cm");
+        telemetry.addData("Y Position", yPos + " cm");
+        telemetry.addData("Orientation", rot + "°");
+        telemetry.addData("Vuforia Mark Reference", markVis + " Mark Detected");
+        telemetry.addData("Left Motor Power", left.getPower() * 10);
+        telemetry.addData("Right Motor Power", right.getPower() * 10);
+        telemetry.addData("Raise Lift Motor Power", lift.getPower() * 10);
+        telemetry.addData("Marker Drop Servo", drop.getPosition());
+        telemetry.addData("Rotate Lift Servo", tilt.getPosition());
+        telemetry.addData("Grab Servo", grab.getPosition());
         telemetry.update();
-        //sleep
-        sleep(1000 / interval);
       }
+      vuforia.deactivate();
+      vuforia.close();
     }
   }
 }
