@@ -35,7 +35,7 @@ public class Autonomous extends LinearOpMode {
   double rot = 0; //orientation of the robot with zero being facing the forward wall
   String markVis = " "; //indicates which vuforia mark is visible
   double corFactor = 0; //corrects drive motor power to straighten
-  double tickFactor = 33.95 / 140; //distance covered by each encorder tick
+  double tickFactor = 33.95 / 560; //distance covered by each encorder tick
   double leftPow = 0; //left motor power
   double rightPow = 0; //right motor power
   public void runOpMode() {
@@ -53,8 +53,8 @@ public class Autonomous extends LinearOpMode {
       left.setDirection(DcMotor.Direction.REVERSE);
       left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      left.setTargetPosition(left.getCurrentPosition() + (int) (targetPos / tickFactor));
-      right.setTargetPosition(right.getCurrentPosition() + (int) (targetPos / tickFactor));
+      left.setTargetPosition(left.getCurrentPosition() + (int) ((11.09 * 40) / tickFactor));
+      right.setTargetPosition(right.getCurrentPosition());
       leftPow = 4;
       rightPow = 4;
       while (opModeIsActive()) {
