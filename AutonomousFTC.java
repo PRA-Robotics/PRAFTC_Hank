@@ -34,10 +34,11 @@ public class AutonomousFTC extends LinearOpMode {
   double yPos = 0; //y position with positive being toward the blue wall
   double rot = 0; //orientation of the robot with zero being facing the forward wall
   String markVis = " "; //indicates which vuforia mark is visible
-  double corFactor = 0; //corrects drive motor power to straighten
+  double corFactor = 1; //corrects drive motor power to straighten
   double tickFactor = 33.95 / 560; //distance covered by each encorder tick
   double leftPow = 0; //left motor power
   double rightPow = 0; //right motor power
+  int loopIndex = 0;
   public void runOpMode() {
     vuforia = new VuforiaRoverRuckus();
     left = hardwareMap.dcMotor.get("leftMotor");
@@ -53,11 +54,10 @@ public class AutonomousFTC extends LinearOpMode {
       left.setDirection(DcMotor.Direction.REVERSE);
       left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      left.setTargetPosition(left.getCurrentPosition() + (int) ((11.09 * 40) / tickFactor));
-      right.setTargetPosition(right.getCurrentPosition());
       leftPow = 4;
       rightPow = 4;
       while (opModeIsActive()) {
+        loopIndex += 1;
         vuRed = vuforia.track("RedPerimeter");
         vuBlue = vuforia.track("BluePerimeter");
         vuFront = vuforia.track("FrontPerimeter");
@@ -109,9 +109,13 @@ public class AutonomousFTC extends LinearOpMode {
         } else {
           markVis = "No";
         }
-        while (left.isBusy() || right.isBusy()) {
-          left.setPower((leftPow * corFactor) / 10);
-          right.setPower(rightPow / 10);
+        if (loopIndex == 1) {
+          left.setTargetPosition(left.getCurrentPosition() + (int) ((11.09 * 40)));
+          right.setTargetPosition(right.getCurrentPosition());
+          while (left.isBusy() || right.isBusy()) {
+            left.setPower((leftPow * corFactor) / 10);
+            right.setPower(rightPow / 10);
+          }
         }
         telemetry.addData("X Position", xPos + " cm");
         telemetry.addData("Y Position", yPos + " cm");
