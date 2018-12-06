@@ -58,57 +58,6 @@ public class AutonomousFTC extends LinearOpMode {
       rightPow = 4;
       while (opModeIsActive()) {
         loopIndex += 1;
-        vuRed = vuforia.track("RedPerimeter");
-        vuBlue = vuforia.track("BluePerimeter");
-        vuFront = vuforia.track("FrontPerimeter");
-        vuBack = vuforia.track("BackPerimeter");
-        if (vuRed.isVisible) {
-          xPos = 0;
-          yPos = 0;
-          for (int i = 0; i < 12; i++) {
-            xPos += vuRed.x / 10;
-            yPos += vuRed.y / 10;
-          }
-          xPos = xPos / 12;
-          yPos = yPos / 12;
-          rot = vuRed.xAngle;
-          markVis = "Red";
-        } else if (vuBlue.isVisible) {
-          xPos = 0;
-          yPos = 0;
-          for (int i = 0; i < 12; i++) {
-            xPos += vuBlue.x / 10;
-            yPos += vuBlue.y / 10;
-          }
-          xPos = xPos / 12;
-          yPos = yPos / 12;
-          rot = vuBlue.xAngle;
-          markVis = "Blue";
-        } else if (vuFront.isVisible) {
-          xPos = 0;
-          yPos = 0;
-          for (int i = 0; i < 12; i++) {
-            xPos += vuFront.x / 10;
-            yPos += vuFront.y / 10;
-          }
-          xPos = xPos / 12;
-          yPos = yPos / 12;
-          rot = vuFront.xAngle;
-          markVis = "Front";
-        } else if (vuBack.isVisible) {
-          xPos = 0;
-          yPos = 0;
-          for (int i = 0; i < 12; i++) {
-            xPos += vuBack.x / 10;
-            yPos += vuBack.y / 10;
-          }
-          xPos = xPos / 12;
-          yPos = yPos / 12;
-          rot = vuBack.xAngle;
-          markVis = "Back";
-        } else {
-          markVis = "No";
-        }
         if (loopIndex == 1) {
           left.setTargetPosition(left.getCurrentPosition() + (int) ((11.09 * 40)));
           right.setTargetPosition(right.getCurrentPosition());
@@ -134,3 +83,56 @@ public class AutonomousFTC extends LinearOpMode {
     }
   }
 }
+/*
+vuRed = vuforia.track("RedPerimeter");
+vuBlue = vuforia.track("BluePerimeter");
+vuFront = vuforia.track("FrontPerimeter");
+vuBack = vuforia.track("BackPerimeter");
+if (vuRed.isVisible) {
+  xPos = 0;
+  yPos = 0;
+  for (int i = 0; i < 12; i++) {
+    xPos += vuRed.x / 10;
+    yPos += vuRed.y / 10;
+  }
+  xPos = xPos / 12;
+  yPos = yPos / 12;
+  rot = vuRed.xAngle;
+  markVis = "Red";
+} else if (vuBlue.isVisible) {
+  xPos = 0;
+  yPos = 0;
+  for (int i = 0; i < 12; i++) {
+    xPos += vuBlue.x / 10;
+    yPos += vuBlue.y / 10;
+  }
+  xPos = xPos / 12;
+  yPos = yPos / 12;
+  rot = vuBlue.xAngle;
+  markVis = "Blue";
+} else if (vuFront.isVisible) {
+  xPos = 0;
+  yPos = 0;
+  for (int i = 0; i < 12; i++) {
+    xPos += vuFront.x / 10;
+    yPos += vuFront.y / 10;
+  }
+  xPos = xPos / 12;
+  yPos = yPos / 12;
+  rot = vuFront.xAngle;
+  markVis = "Front";
+} else if (vuBack.isVisible) {
+  xPos = 0;
+  yPos = 0;
+  for (int i = 0; i < 12; i++) {
+    xPos += vuBack.x / 10;
+    yPos += vuBack.y / 10;
+  }
+  xPos = xPos / 12;
+  yPos = yPos / 12;
+  rot = vuBack.xAngle;
+  markVis = "Back";
+} else {
+  markVis = "No";
+}
+*/
