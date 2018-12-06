@@ -66,17 +66,6 @@ public class AutonomousFTC extends LinearOpMode {
             right.setPower(rightPow / 10);
           }
         }
-        telemetry.addData("X Position", xPos + " cm");
-        telemetry.addData("Y Position", yPos + " cm");
-        telemetry.addData("Orientation", rot + "°");
-        telemetry.addData("Vuforia Mark Reference", markVis + " Mark Detected");
-        telemetry.addData("Left Motor Power", left.getPower() * 10);
-        telemetry.addData("Right Motor Power", right.getPower() * 10);
-        telemetry.addData("Raise Lift Motor Power", lift.getPower() * 10);
-        telemetry.addData("Marker Drop Servo", drop.getPosition());
-        telemetry.addData("Rotate Lift Servo", tilt.getPosition());
-        telemetry.addData("Grab Servo", grab.getPosition());
-        telemetry.update();
       }
       vuforia.deactivate();
       vuforia.close();
@@ -135,4 +124,16 @@ if (vuRed.isVisible) {
 } else {
   markVis = "No";
 }
+
+telemetry.addData("X Position", xPos + " cm");
+telemetry.addData("Y Position", yPos + " cm");
+telemetry.addData("Orientation", rot + "°");
+telemetry.addData("Vuforia Mark Reference", markVis + " Mark Detected");
+telemetry.addData("Left Motor Power", left.getPower() * 10);
+telemetry.addData("Right Motor Power", right.getPower() * 10);
+telemetry.addData("Raise Lift Motor Power", lift.getPower() * 10);
+telemetry.addData("Marker Drop Servo", drop.getPosition());
+telemetry.addData("Rotate Lift Servo", tilt.getPosition());
+telemetry.addData("Grab Servo", grab.getPosition());
+telemetry.update();
 */
