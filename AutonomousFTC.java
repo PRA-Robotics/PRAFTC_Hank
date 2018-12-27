@@ -1,6 +1,6 @@
 /**
 *Autonomous Delta OpMode
-*Commodore 64 Team
+*Commodore 64 Team (15677)
 *PRA Rookie Robotics
 *Written by Noah Mulvaney
 **/
@@ -34,11 +34,19 @@ public class AutonomousFTC extends LinearOpMode {
   double yPos = 0; //y position with positive being toward the blue wall
   double rot = 0; //orientation of the robot with zero being facing the forward wall
   String markVis = " "; //indicates which vuforia mark is visible
-  double corFactor = 1; //corrects drive motor power to straighten
-  double tickFactor = 33.95 / 560; //distance covered by each encorder tick
   double leftPow = 0; //left motor power
   double rightPow = 0; //right motor power
-  int loopIndex = 0;
+  int loopIndex = 0; //counts loop steps
+  static double driveDiameter = 10.8; //diameter of drive wheels in centimeters
+  static double driveGap = 38.5; //distance between drive wheels in centimeters
+  static int encorderFactor = 560; //encorder events per rotation
+  static double corFactor = 1; //corrects drive motor power to straighten
+  /*
+  diameter: 10.8 cm
+  circumferance: pi * diameter
+    33.93 cm / rotation
+  ticks / rotation: 560
+  */
   public void runOpMode() {
     vuforia = new VuforiaRoverRuckus();
     left = hardwareMap.dcMotor.get("leftMotor");
@@ -66,6 +74,7 @@ public class AutonomousFTC extends LinearOpMode {
             right.setPower(rightPow / 10);
           }
         }
+        if (loopIndex)
       }
       vuforia.deactivate();
       vuforia.close();
