@@ -67,12 +67,24 @@ public class Vision {
 public class Hardware {
   DcMotor rightMotor;
   DcMotor leftMotor;
-  DcMotor liftArmMotor;
-  Servo markerDropServo;
-  Servo liftArmServo;
+  DcMotor liftMotor;
+  Servo dropServo;
+  Servo liftServo;
   Servo clawServo;
-  public void new() {
-
+  public void init() {
+    this.rightMotor = hardwareMap.dcMotor.get("rightMotor");
+    this.leftMotor = hardwareMap.dcMotor.get("leftMotor");
+    this.liftMotor = hardwareMap.dcMotor.get("liftMotor");
+    this.dropServo = hardwareMap.servo.get("dropServo");
+    this.liftServo = hardwareMap.servo.get("liftServo");
+    this.clawServo = hardwareMap.servo.get("clawServo");
+  }
+  public void motorStart(RobotConfig config) {
+    this.rightMotor.setDirection(DcMotor.Direction.REVERSE);
+    this.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    this.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    this.rightMotor.setPower(config.SPEED * config.CORRECTION);
+    this.leftMotor.setPower(config.SPEED);
   }
 }
 
@@ -80,8 +92,10 @@ public class RobotConfig {
   static double SPEED;
   static double CORRECTION;
   static double DISTANCE;
-  public void new() {
-
+  public void set(double speed, double correction, double distance) {
+    this.SPEED = speed;
+    this.CORRECTION = correction;
+    this.DISTANCE = distance;
   }
 }
 
@@ -99,11 +113,14 @@ public class Commodore_Autonomous extends LinearOpMode {
   Hardware robot;
   RobotConfig config;
   Navigation map;
+  config.set(.3, 1, 0);
   public void runOpMode() {
     vision.init();
+    robot.init();
     waitForStart();
     if (opModeIsActive()) {
       vision.open();
+      robot.motorStart(config);
       while (opModeIsActive()) {
 
       }

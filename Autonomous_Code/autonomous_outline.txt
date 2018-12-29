@@ -15,17 +15,18 @@ Vision
 Hardware
   DcMotor rightMotor
   DcMotor leftMotor
-  DcMotor liftArmMotor
-  Servo markerDropServo
-  Servo liftArmServo
+  DcMotor liftMotor
+  Servo dropServo
+  Servo liftServo
   Servo clawServo
-  void new()
+  void init()
+  void motorStart(RobotConfig config)
 
 RobotConfig
   double SPEED
   double CORRECTION
   double DISTANCE
-  void new()
+  void set(double speed, double correction, double distance)
 
 Navigation
   double xPos
