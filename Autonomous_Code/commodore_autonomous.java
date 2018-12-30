@@ -16,6 +16,9 @@ public class Vision {
   VuforiaBase.TrackingResults vuRed;
   VuforiaBase.TrackingResults vuBlue;
   String markVis;
+  double xPos;
+  double yPos;
+  double rot;
   public void init() {
     this.vuforia = new VuforiaRoverRuckus();
     this.vuforia.initialize(" ", VuforiaLocalizer.CameraDirection.BACK, false, true, VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES, 0, 0, 0, 0, 0, 0, true);
@@ -47,16 +50,16 @@ public class Vision {
       return null;
     }
   }
-  public void find(Navigation nav, VuforiaBase.TrackingResults wall) {
-    nav.xPos = 0;
-    nav.yPos = 0;
+  public void find(VuforiaBase.TrackingResults wall) {
+    this.xPos = 0;
+    this.yPos = 0;
     for (int i = 0; i < 12; i++) {
-      nav.xPos += wall.x / 10;
-      nav.yPos += wall.y / 10;
+      this.xPos += wall.x / 10;
+      this.yPos += wall.y / 10;
     }
-    nav.xPos = nav.xPos / 12;
-    nav.yPos = nav.yPos / 12;
-    nav.rot = wall.xAngle;
+    this.xPos = this.xPos / 12;
+    this.yPos = this.yPos / 12;
+    this.rot = wall.xAngle;
   }
   public void shut() {
     this.vuforia.deactive();
@@ -86,25 +89,28 @@ public class Hardware {
     this.rightMotor.setPower(config.SPEED * config.CORRECTION);
     this.leftMotor.setPower(config.SPEED);
   }
+  public void forward(RobotConfig config, double dist) {
+    this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition() + (int) (dist * config.FORWARD));
+    this.leftMotor.setTargetPosition(this.leftMotor.getCurrentPosition() + (int) (dist * config.FORWARD));
+    while (this.leftMotor.isBusy() || this.rightMotor.isBusy()) {}
+  }
+  public void turn(RobotConfig config, double angle) {
+    this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition() + (int) (angle * config.TURN));
+    this.leftMotor.setTargetPosition(this.leftMotor.getCurrentPosition() - (int) (angle * config.TURN));
+    while (this.leftMotor.isBusy() || this.rightMotor.isBusy()) {}
+  }
 }
 
 public class RobotConfig {
   static double SPEED;
   static double CORRECTION;
-  static double DISTANCE;
-  public void set(double speed, double correction, double distance) {
+  static double FORWARD;
+  static double TURN;
+  public void set(double speed, double correction, double forward, double turn) {
     this.SPEED = speed;
     this.CORRECTION = correction;
-    this.DISTANCE = distance;
-  }
-}
-
-public class Navigation {
-  double xPos;
-  double yPos;
-  double rot;
-  public void new() {
-
+    this.FORWARD = forward;
+    this.TURN = turn;
   }
 }
 
@@ -113,7 +119,7 @@ public class Commodore_Autonomous extends LinearOpMode {
   Hardware robot;
   RobotConfig config;
   Navigation map;
-  config.set(.3, 1, 0);
+  config.set(.2, 1, 0, 0);
   public void runOpMode() {
     vision.init();
     robot.init();
@@ -121,9 +127,7 @@ public class Commodore_Autonomous extends LinearOpMode {
     if (opModeIsActive()) {
       vision.open();
       robot.motorStart(config);
-      while (opModeIsActive()) {
-
-      }
+      while (opModeIsActive()) {}
       vision.shut();
     }
   }
