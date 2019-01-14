@@ -106,7 +106,7 @@ public class RobotConfig {
   static double CORRECTION;
   static double FORWARD;
   static double TURN;
-  public void set(double speed, double correction, double forward, double turn) {
+  public RobotConfig(double speed, double correction, double forward, double turn) {
     this.SPEED = speed;
     this.CORRECTION = correction;
     this.FORWARD = forward;
@@ -117,17 +117,23 @@ public class RobotConfig {
 public class Commodore_Autonomous extends LinearOpMode {
   Vision vision;
   Hardware robot;
-  RobotConfig config;
-  Navigation map;
-  config.set(.2, 1, 0, 0);
+  RobotConfig config = new RobotConfig(0.2, 1, 16.505, 0);
+  int count;
+
   public void runOpMode() {
     vision.init();
     robot.init();
+    count = 0;
     waitForStart();
     if (opModeIsActive()) {
       vision.open();
       robot.motorStart(config);
-      while (opModeIsActive()) {}
+      while (opModeIsActive()) {
+        if (count = 1) {
+          robot.forward(config, 50);
+        }
+        count++;
+      }
       vision.shut();
     }
   }
