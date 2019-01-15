@@ -9,6 +9,7 @@ public class Vision {
   VuforiaBase.TrackingResults vuBack;
   VuforiaBase.TrackingResults vuRed;
   VuforiaBase.TrackingResults vuBlue;
+  VuforiaBase.TrackingResults wall;
   String markVis;
   double xPos;
   double yPos;
@@ -27,35 +28,31 @@ public class Vision {
     this.vuBack = this.vuforia.track("BackPerimeter");
     this.vuRed = this.vuforia.track("RedPerimeter");
     this.vuBlue = this.vuforia.track("BluePerimeter");
-  }
-  public VuforiaBase.TrackingResults visible() {
     if (this.vuFront.isVisible) {
       this.markVis = "Front";
-      return this.vuFront;
+      this.wall = this.vuFront;
     } else if (this.vuBack.isVisible) {
       this.markVis = "Back";
-      return this.vuBack;
+      this.wall = this.vuBack;
     } else if (this.vuRed.isVisible) {
       this.markVis = "Red";
-      return this.vuRed;
+      this.wall = this.vuRed;
     } else if (this.vuBlue.isVisible) {
       this.markVis = "Blue";
-      return this.vuBlue;
+      this.wall = this.vuBlue;
     } else {
       this.markVis = "None";
-      return null;
+      this.wall = null;
     }
-  }
-  public void find(VuforiaBase.TrackingResults wall) {
     this.xPos = 0;
     this.yPos = 0;
     for (int i = 0; i < 12; i++) {
-      this.xPos += wall.x / 10;
-      this.yPos += wall.y / 10;
+      this.xPos += this.wall.x / 10;
+      this.yPos += this.wall.y / 10;
     }
     this.xPos = this.xPos / 12;
     this.yPos = this.yPos / 12;
-    this.rot = wall.xAngle;
+    this.rot = this.wall.xAngle;
   }
   public void shut() {
     this.vuforia.deactive();

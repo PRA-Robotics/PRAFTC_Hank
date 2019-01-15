@@ -22,8 +22,13 @@ public class Commodore extends LinearOpMode {
       vision.open();
       robot.motorStart(config);
 
-      while(opModeIsActive()) {
+      int loop = 0;
 
+      while(opModeIsActive()) {
+        if (loop == 0) {
+          robot.forward(config, 50);
+        }
+        vision.update();
       }
       vision.shut();
     }
