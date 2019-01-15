@@ -14,7 +14,7 @@ public class Vision {
   double xPos;
   double yPos;
   double rot;
-  public void Vision() {
+  public Vision() {
     this.vuforia = new VuforiaRoverRuckus();
   }
   public void init() {
@@ -55,7 +55,6 @@ public class Vision {
     this.rot = this.wall.xAngle;
   }
   public void shut() {
-    this.vuforia.deactive();
     this.vuforia.close();
   }
 }
