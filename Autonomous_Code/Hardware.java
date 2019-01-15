@@ -8,16 +8,16 @@ public class Hardware {
   Servo dropServo;
   Servo liftServo;
   Servo clawServo;
-  public Hardware(HardwareMap hardwareMap) {
-    this.rightMotor = hardwareMap.dcMotor.get("rightMotor");
-    this.leftMotor = hardwareMap.dcMotor.get("leftMotor");
-    this.liftMotor = hardwareMap.dcMotor.get("liftMotor");
-    this.dropServo = hardwareMap.servo.get("dropServo");
-    this.liftServo = hardwareMap.servo.get("liftServo");
-    this.clawServo = hardwareMap.servo.get("clawServo");
+  public void init(HardwareMap hm){
+    rightMotor = hm.get(DcMotor.class, "rightMotor");
+    leftMotor = hm.get(DcMotor.class, "leftMotor");
+    liftServo = hm.get(Servo.class, "liftServo");
+    liftServo = hm.get(Servo.class, "tiltServo");
+    dropServo = hm.get(Servo.class, "dropServo");
+    clawServo = hm.get(Servo.class, "clawServo");
   }
   public void motorStart(Config config) {
-    this.rightMotor.setDirection(DcMotor.Direction.REVERSE);
+    this.leftMotor.setDirection(DcMotor.Direction.REVERSE);
     this.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     this.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     this.rightMotor.setPower(config.SPEED * config.CORRECTION);
