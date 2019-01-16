@@ -35,7 +35,7 @@ public class Hardware {
     while (this.leftMotor.isBusy() || this.rightMotor.isBusy()) {
     }
   }
-  public void servo(int dropPos, int liftPos, int tiltPos, int clawPos) {
+  public void servo(double dropPos, double liftPos, double tiltPos, double clawPos) {
     dropServo.setPosition(dropPos);
     liftServo.setPosition(liftPos);
     tiltServo.setPosition(tiltPos);
