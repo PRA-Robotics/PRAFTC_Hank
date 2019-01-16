@@ -36,9 +36,9 @@ public class Hardware {
     }
   }
   public void servo(int dropPos, int liftPos, int tiltPos, int clawPos) {
-    dropServo.setTargetPosition(dropPos);
-    liftServo.setTargetPosition(liftPos);
-    tiltServo.setTargetPosition(tiltPos);
-    clawServo.setTargetPosition(clawPos);
+    dropServo.setPosition(dropPos);
+    liftServo.setPosition(liftPos);
+    tiltServo.setPosition(tiltPos);
+    clawServo.setPosition(clawPos);
   }
 }
