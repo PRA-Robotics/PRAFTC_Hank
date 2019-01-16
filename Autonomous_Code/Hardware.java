@@ -4,16 +4,16 @@ import com.qualcomm.robotcore.hardware.*;
 public class Hardware {
   DcMotor rightMotor;
   DcMotor leftMotor;
-  DcMotor liftMotor;
   Servo dropServo;
   Servo liftServo;
+  Servo tiltServo;
   Servo clawServo;
   public void init(HardwareMap hm){
     rightMotor = hm.get(DcMotor.class, "rightMotor");
     leftMotor = hm.get(DcMotor.class, "leftMotor");
-    liftServo = hm.get(Servo.class, "liftServo");
-    liftServo = hm.get(Servo.class, "tiltServo");
     dropServo = hm.get(Servo.class, "dropServo");
+    liftServo = hm.get(Servo.class, "liftServo");
+    tiltServo = hm.get(Servo.class, "tiltServo");
     clawServo = hm.get(Servo.class, "clawServo");
   }
   public void motorStart(Config config) {
@@ -34,5 +34,11 @@ public class Hardware {
     this.leftMotor.setTargetPosition(this.leftMotor.getCurrentPosition() - (int) (angle * config.TURN));
     while (this.leftMotor.isBusy() || this.rightMotor.isBusy()) {
     }
+  }
+  public void servo(int dropPos, int liftPos, int tiltPos, int clawPos) {
+    dropServo.setTargetPosition(dropPos);
+    liftServo.setTargetPosition(liftPos);
+    tiltServo.setTargetPosition(tiltPos);
+    clawServo.setTargetPosition(clawPos);
   }
 }
