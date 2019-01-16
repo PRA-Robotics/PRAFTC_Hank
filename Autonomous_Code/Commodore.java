@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 public class Commodore extends LinearOpMode {
   Vision vision = new Vision();
   Hardware robot = new Hardware();
-  Config config = new Config(.2, 1, 16.505, 5.545);
+  Config config = new Config(.2, 16.505, 5.545);
 
   public void runOpMode() {
     vision.init();
@@ -24,6 +24,8 @@ public class Commodore extends LinearOpMode {
       while(opModeIsActive()) {
         if (loop == 0) {
           robot.forward(config, 50);
+        } else if (loop == 1) {
+          robot.turn(config, 180);
         }
 
         //vision.update(); FIX

@@ -20,17 +20,19 @@ public class Hardware {
     this.leftMotor.setDirection(DcMotor.Direction.REVERSE);
     this.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     this.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    this.rightMotor.setPower(config.SPEED * config.CORRECTION);
+    this.rightMotor.setPower(config.SPEED);
     this.leftMotor.setPower(config.SPEED);
   }
   public void forward(Config config, double dist) {
     this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition() + (int) (dist * config.FORWARD));
     this.leftMotor.setTargetPosition(this.leftMotor.getCurrentPosition() + (int) (dist * config.FORWARD));
-    while (this.leftMotor.isBusy() || this.rightMotor.isBusy()) {}
+    while (this.leftMotor.isBusy() || this.rightMotor.isBusy()) {
+    }
   }
   public void turn(Config config, double angle) {
     this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition() + (int) (angle * config.TURN));
     this.leftMotor.setTargetPosition(this.leftMotor.getCurrentPosition() - (int) (angle * config.TURN));
-    while (this.leftMotor.isBusy() || this.rightMotor.isBusy()) {}
+    while (this.leftMotor.isBusy() || this.rightMotor.isBusy()) {
+    }
   }
 }
