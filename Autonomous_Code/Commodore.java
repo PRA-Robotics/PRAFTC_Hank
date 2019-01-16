@@ -29,7 +29,6 @@ public class Commodore extends LinearOpMode {
           robot.turn(config, 180);
         }
 
-        //vision.update(); FIX
         loop++;
       }
       vision.shut();
