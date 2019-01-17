@@ -41,5 +41,6 @@ public class Hardware {
     liftServo.setPosition(liftPos);
     tiltServo.setPosition(tiltPos);
     clawServo.setPosition(clawPos);
+    while ((dropPos != dropServo.getPosition()) || (liftPos != liftServo.getPosition()) || (tiltPos != tiltServo.getPosition()) || (clawPos != clawServo.getPosition())) {}
   }
 }
