@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
-@Autonomous(name = "Autonomous")
+@Autonomous(name = "Autonomous (Commodore Competition)")
 
 public class Commodore extends LinearOpMode {
   Vision vision = new Vision();
