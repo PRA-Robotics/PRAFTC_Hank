@@ -14,26 +14,28 @@ public class Commodore extends LinearOpMode {
   public void runOpMode() {
     vision.init();
     robot.init(hardwareMap);
+    robot.servo(0, .2, .5, .3);
 
     waitForStart();
     if (opModeIsActive()) {
       vision.open();
       robot.motorStart(config);
 
-      robot.servo(0, .3, .5, 0);
-      //sleep();
-      robot.servo(0, .7, .5, 0);
-      //sleep();
-      robot.servo(0, .7, .4, 0);
-      //sleep();
-      robot.servo(0, .3, .4, 0);
-      //sleep();
-      robot.servo(0, .3, .5, 0);
+      robot.servo(.3, .2, .5, 0);
+      sleep(5000);
+      robot.servo(.3, .7, .5, 0);
+      sleep(5000);
+      robot.servo(.3, .7, .4, 0);
+      sleep(5000);
+      robot.servo(.3, .4, .4, 0);
+      sleep(5000);
+      robot.servo(.3, .4, .5, 0);
+      sleep(5000);
       robot.turn(config, -45);
       robot.forward(config, 250);
       robot.turn(config, 90);
       robot.forward(config, 200);
-      robot.servo(.8, .3, .5, 0);
+      robot.servo(1, .3, .5, 0);
 
       vision.shut();
     }

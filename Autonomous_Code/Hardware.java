@@ -23,6 +23,8 @@ public class Hardware {
     this.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     this.rightMotor.setPower(config.SPEED);
     this.leftMotor.setPower(config.SPEED);
+    this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition());
+    this.rightMotor.setTargetPosition(this.leftMotor.getCurrentPosition());
   }
   public void forward(Config config, double dist) {
     this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition() + (int) (dist * config.FORWARD));
@@ -41,6 +43,5 @@ public class Hardware {
     liftServo.setPosition(liftPos);
     tiltServo.setPosition(tiltPos);
     clawServo.setPosition(clawPos);
-    while ((dropPos != dropServo.getPosition()) || (liftPos != liftServo.getPosition()) || (tiltPos != tiltServo.getPosition()) || (clawPos != clawServo.getPosition())) {}
   }
 }
