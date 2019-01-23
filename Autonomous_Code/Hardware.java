@@ -21,10 +21,10 @@ public class Hardware {
     this.leftMotor.setDirection(DcMotor.Direction.REVERSE);
     this.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     this.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition());
+    this.leftMotor.setTargetPosition(this.leftMotor.getCurrentPosition());
     this.rightMotor.setPower(config.SPEED);
     this.leftMotor.setPower(config.SPEED);
-    this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition());
-    this.rightMotor.setTargetPosition(this.leftMotor.getCurrentPosition());
   }
   public void forward(Config config, double dist) {
     this.rightMotor.setTargetPosition(this.rightMotor.getCurrentPosition() + (int) (dist * config.FORWARD));
