@@ -6,7 +6,7 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
 @Autonomous(name = "Autonomous (Rear Blue)")
 
-public class Commodore_Model extends LinearOpMode {
+public class Commodore_RB extends LinearOpMode {
   Vision vision = new Vision();
   Hardware robot = new Hardware();
   Config config = new Config(.2, 16.505, 6);
