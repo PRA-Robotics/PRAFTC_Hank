@@ -35,7 +35,9 @@ public class Commodore_Indirect extends LinearOpMode {
       sleep(3000);
       robot.forward(config, 50);
       robot.turn(config, 90);
-      robot.forward(config, 400);
+      robot.forward(config, 120);
+      robot.turn(config, 50);
+      robot.forward(config, 200);
       robot.servo(0, .3, .335, .39);
 
       vision.shut();
