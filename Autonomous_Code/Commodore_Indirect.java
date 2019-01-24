@@ -7,19 +7,19 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 @Autonomous(name = "Autonomous (Indirect)")
 
 public class Commodore_Indirect extends LinearOpMode {
-  Vision vision = new Vision();
+  //Vision vision = new Vision();
   Hardware robot = new Hardware();
   Config config = new Config(.2, 16.505, 6);
 
   public void runOpMode() {
-    vision.init();
+    //vision.init();
     robot.init(hardwareMap);
     //dropPos, liftPos, tiltPos, clawPos
     robot.servo(.3, .3, .325, .39);
 
     waitForStart();
     if (opModeIsActive()) {
-      vision.open();
+      //vision.open();
       robot.motorStart(config);
 
       robot.servo(.3, .3, .335, .39);
@@ -40,7 +40,7 @@ public class Commodore_Indirect extends LinearOpMode {
       robot.forward(config, 200);
       robot.servo(0, .3, .335, .39);
 
-      vision.shut();
+      //vision.shut();
     }
   }
 }
