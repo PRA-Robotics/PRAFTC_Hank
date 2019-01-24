@@ -15,7 +15,7 @@ public class Hardware {
     dropServo = hm.get(Servo.class, "dropServo");
     liftServo = hm.get(Servo.class, "liftServo");
     tiltServo = hm.get(Servo.class, "tiltServo");
-    clawServo = hm.get(Servo.class, "clawServo");
+    clawServo = hm.get(Servo.class, "colServo");
   }
   public void motorStart(Config config) {
     this.leftMotor.setDirection(DcMotor.Direction.REVERSE);

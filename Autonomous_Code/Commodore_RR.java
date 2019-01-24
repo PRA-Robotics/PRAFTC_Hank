@@ -15,28 +15,28 @@ public class Commodore_RR extends LinearOpMode {
     vision.init();
     robot.init(hardwareMap);
     //dropPos, liftPos, tiltPos, clawPos
-    robot.servo(.3, .3, .325, 0);
+    robot.servo(.3, .3, .325, .39);
 
     waitForStart();
     if (opModeIsActive()) {
       vision.open();
       robot.motorStart(config);
 
-      robot.servo(.3, .3, .335, 0);
+      robot.servo(.3, .3, .335, .39);
       sleep(1000);
-      robot.servo(.3, .8, .335, 0);
+      robot.servo(.3, .84, .335, .39);
       sleep(6000);
-      robot.servo(.3, .8, .25, 0);
+      robot.turn(config, -8);
+      robot.servo(.3, .84, 0, .39);
       sleep(3000);
-      robot.servo(.3, .4, .25, 0);
+      robot.servo(.3, .4, 0, .39);
       sleep(3000);
-      robot.servo(.3, .4, .335, 0);
+      robot.servo(.3, .4, .335, .39);
       sleep(3000);
-      robot.turn(config, -45);
-      robot.forward(config, 250);
-      robot.turn(config, 90);
-      robot.forward(config, 200);
-      robot.servo(1, .3, .5, 0);
+      robot.forward(config, 10);
+      robot.turn(config, -27.5);
+      robot.forward(config, 150);
+      robot.servo(0, .3, .335, .39);
 
       vision.shut();
     }
