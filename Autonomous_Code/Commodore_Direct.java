@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
-@Autonomous(name = "Autonomous (Rear Blue)")
+@Autonomous(name = "Autonomous (Direct)")
 
-public class Commodore_RB extends LinearOpMode {
+public class Commodore_Direct extends LinearOpMode {
   Vision vision = new Vision();
   Hardware robot = new Hardware();
   Config config = new Config(.2, 16.505, 6);
