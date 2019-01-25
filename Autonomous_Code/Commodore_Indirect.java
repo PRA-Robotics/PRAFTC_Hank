@@ -15,30 +15,30 @@ public class Commodore_Indirect extends LinearOpMode {
     //vision.init();
     robot.init(hardwareMap);
     //dropPos, liftPos, tiltPos, clawPos
-    robot.servo(.3, .3, .325, .39);
+    robot.servo(.3, .3, .325, .343);
 
     waitForStart();
     if (opModeIsActive()) {
       //vision.open();
       robot.motorStart(config);
 
-      robot.servo(.3, .3, .335, .39);
+      robot.servo(.3, .3, .335, .343);
       sleep(1000);
-      robot.servo(.3, .84, .335, .39);
+      robot.servo(.3, .84, .335, .343);
       sleep(6000);
       robot.turn(config, -8);
-      robot.servo(.3, .84, 0, .39);
+      robot.servo(.3, .84, 0, .343);
       sleep(3000);
-      robot.servo(.3, .4, 0, .39);
+      robot.servo(.3, .4, 0, .343);
       sleep(3000);
-      robot.servo(.3, .4, .335, .39);
+      robot.servo(.3, .4, .335, .343);
       sleep(3000);
       robot.forward(config, 50);
       robot.turn(config, 90);
       robot.forward(config, 120);
       robot.turn(config, 50);
       robot.forward(config, 200);
-      robot.servo(0, .3, .335, .39);
+      robot.servo(0, .3, .335, .343);
 
       //vision.shut();
     }
