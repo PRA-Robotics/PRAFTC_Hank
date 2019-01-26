@@ -33,7 +33,7 @@ public class Commodore_Direct extends LinearOpMode {
       robot.servo(.4, .4, .335, .343);
       sleep(2000);
 
-      robot.turn(config, -10);
+      robot.turn(config, 1);
       robot.forward(config, 160);
       robot.servo(0, .4, .335, .343);
       sleep(3000);
